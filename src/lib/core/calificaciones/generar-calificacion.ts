@@ -31,6 +31,12 @@ const getIngresoEfectivoUltimoPeriodo = (data: RegistroCalificacion[]) => {
 		.sumBy('ingresoEfectivo');
 };
 
+const getEgresosUltimoPeriodo = (data: RegistroCalificacion[]) => {
+	return _(data)
+		.filter((d) => getISODate(d.desde).getMonth() >= 9)
+		.sumBy('egresoEfectivo');
+};
+
 const getInventarioFinal = (data: RegistroCalificacion[], funcionarioId?: string) => {
 	const maxDesde = _.maxBy(data, 'desde')?.desde;
 	if (!maxDesde) return 0;
@@ -114,7 +120,9 @@ const generadorResultadosSubfactor =
 			// Anteriormente se tenían en cuenta los procesos del cuarto trimestre para los juzgados de ejecución de penas,
 			// Ahora se excluyen los procesos de cuarto trimestre para todos los juzgados de conformidad con el criterio de la Unidad de Carrera Judicial.
 			const ingresoEfectivoUltimoPeriodo = getIngresoEfectivoUltimoPeriodo(data);
+			const egresosUltimoPeriodo = getEgresosUltimoPeriodo(data);
 			cargaBaseCalificacionDespacho -= ingresoEfectivoUltimoPeriodo;
+			cargaBaseCalificacionDespacho += egresosUltimoPeriodo;
 			const ingresoEfectivoUltimoPeriodoFunc = getIngresoEfectivoUltimoPeriodo(dataFuncionario);
 			cargaBaseCalificacionFuncionario -= ingresoEfectivoUltimoPeriodoFunc;
 
