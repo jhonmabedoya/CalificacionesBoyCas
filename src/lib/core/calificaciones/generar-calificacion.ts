@@ -122,7 +122,6 @@ const generadorResultadosSubfactor =
 			const ingresoEfectivoUltimoPeriodo = getIngresoEfectivoUltimoPeriodo(data);
 			const egresosUltimoPeriodo = getEgresosUltimoPeriodo(data);
 			cargaBaseCalificacionDespacho -= ingresoEfectivoUltimoPeriodo;
-			cargaBaseCalificacionDespacho += egresosUltimoPeriodo;
 			const ingresoEfectivoUltimoPeriodoFunc = getIngresoEfectivoUltimoPeriodo(dataFuncionario);
 			cargaBaseCalificacionFuncionario -= ingresoEfectivoUltimoPeriodoFunc;
 
