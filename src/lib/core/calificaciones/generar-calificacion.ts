@@ -131,8 +131,10 @@ const generadorResultadosSubfactor =
 				egresoFuncionario += getEgresoFuncionario(dataTutelas, funcionarioId);
 				egresoOtrosFuncionarios += getEgresoOtrosFuncionarios(dataFuncTutelas, funcionarioId);
 				const cargaBaseTutelas = getCargaBaseCalificacion(dataTutelas);
+				const egresosUltimoPeriodoTutelas = getEgresosUltimoPeriodo(dataTutelas);
+				const ingresoEfectivoUltimoPeriodoTutelas = getIngresoEfectivoUltimoPeriodo(dataTutelas);
 				const inventarioFinalTutelas = getInventarioFinal(dataTutelas);
-				cargaBaseCalificacionDespacho += cargaBaseTutelas - inventarioFinalTutelas;
+				cargaBaseCalificacionDespacho += cargaBaseTutelas - ingresoEfectivoUltimoPeriodoTutelas + egresosUltimoPeriodoTutelas;
 				cargaBaseCalificacionFuncionario += getCargaBaseCalificacion(dataFuncTutelas) - getInventarioFinal(dataFuncTutelas, funcionarioId);
 			}
 		}
