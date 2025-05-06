@@ -120,7 +120,6 @@ const generadorResultadosSubfactor =
 			// Anteriormente se tenían en cuenta los procesos del cuarto trimestre para los juzgados de ejecución de penas,
 			// Ahora se excluyen los procesos de cuarto trimestre para todos los juzgados de conformidad con el criterio de la Unidad de Carrera Judicial.
 			const ingresoEfectivoUltimoPeriodo = getIngresoEfectivoUltimoPeriodo(data);
-			const egresosUltimoPeriodo = getEgresosUltimoPeriodo(data);
 			cargaBaseCalificacionDespacho -= ingresoEfectivoUltimoPeriodo;
 			const ingresoEfectivoUltimoPeriodoFunc = getIngresoEfectivoUltimoPeriodo(dataFuncionario);
 			cargaBaseCalificacionFuncionario -= ingresoEfectivoUltimoPeriodoFunc;
@@ -130,10 +129,8 @@ const generadorResultadosSubfactor =
 				egresoFuncionario += getEgresoFuncionario(dataTutelas, funcionarioId);
 				egresoOtrosFuncionarios += getEgresoOtrosFuncionarios(dataFuncTutelas, funcionarioId);
 				const cargaBaseTutelas = getCargaBaseCalificacion(dataTutelas);
-				const egresosUltimoPeriodoTutelas = getEgresosUltimoPeriodo(dataTutelas);
-				const ingresoEfectivoUltimoPeriodoTutelas = getIngresoEfectivoUltimoPeriodo(dataTutelas);
 				const inventarioFinalTutelas = getInventarioFinal(dataTutelas);
-				cargaBaseCalificacionDespacho += cargaBaseTutelas - ingresoEfectivoUltimoPeriodoTutelas + egresosUltimoPeriodoTutelas;
+				cargaBaseCalificacionDespacho += cargaBaseTutelas - inventarioFinalTutelas;
 				cargaBaseCalificacionFuncionario += getCargaBaseCalificacion(dataFuncTutelas) - getInventarioFinal(dataFuncTutelas, funcionarioId);
 			}
 		}
