@@ -116,7 +116,16 @@ const generadorResultadosSubfactor =
 		let cargaBaseCalificacionDespacho = getCargaBaseCalificacion(data);
 		let cargaBaseCalificacionFuncionario = getCargaBaseCalificacion(dataFuncionario);
 
-		if ((subfactor === 'oral' || subfactor === 'escrito') && especialidad !== 'EjecucionPenas') {
+		if ((subfactor === 'oral' || subfactor === 'escrito')) {
+			if (especialidad !== 'EjecucionPenas') {
+				totalInventarioInicial += getInventarioInicial(dataTutelas);
+				egresoFuncionario += getEgresoFuncionario(dataTutelas, funcionarioId);
+				egresoOtrosFuncionarios += getEgresoOtrosFuncionarios(dataFuncTutelas, funcionarioId);
+				const cargaBaseTutelas = getCargaBaseCalificacion(dataTutelas);
+				const inventarioFinalTutelas = getInventarioFinal(dataTutelas);
+				cargaBaseCalificacionDespacho += cargaBaseTutelas - inventarioFinalTutelas;
+				cargaBaseCalificacionFuncionario += getCargaBaseCalificacion(dataFuncTutelas) - getInventarioFinal(dataFuncTutelas, funcionarioId);
+			}
 			// Anteriormente se tenían en cuenta los procesos del cuarto trimestre para los juzgados de ejecución de penas,
 			// Ahora se excluyen los procesos de cuarto trimestre para todos los juzgados de conformidad con el criterio de la Unidad de Carrera Judicial.
 			const ingresoEfectivoUltimoPeriodo = getIngresoEfectivoUltimoPeriodo(data);
