@@ -78,7 +78,7 @@ const getRangoFechasFuncionario = (data: RegistroCalificacion[], funcionarioId: 
 };
 
 const generadorResultadosSubfactor =
-	(funcionarioId: string, diasHabilesDespacho: number, diasHabilesFuncionario: number, hayEscritos: boolean, capacidadMaxima: number) =>
+	(funcionarioId: string, diasHabilesDespacho: number, diasHabilesFuncionario: number, hayEscritos: boolean, capacidadMaxima: number, especialidad: string) =>
 	(data: RegistroCalificacion[], dataTutelas: RegistroCalificacion[], maxResultado: number, subfactor: ClaseRegistroCalificacion) => {
 		if (!data.length)
 			return {
@@ -116,7 +116,7 @@ const generadorResultadosSubfactor =
 		let cargaBaseCalificacionDespacho = getCargaBaseCalificacion(data);
 		let cargaBaseCalificacionFuncionario = getCargaBaseCalificacion(dataFuncionario);
 
-		if (subfactor === 'oral' || subfactor === 'escrito') {
+		if ((subfactor === 'oral' || subfactor === 'escrito') && especialidad !== 'EjecucionPenas') {
 			// Anteriormente se tenían en cuenta los procesos del cuarto trimestre para los juzgados de ejecución de penas,
 			// Ahora se excluyen los procesos de cuarto trimestre para todos los juzgados de conformidad con el criterio de la Unidad de Carrera Judicial.
 			const ingresoEfectivoUltimoPeriodo = getIngresoEfectivoUltimoPeriodo(data);
@@ -440,7 +440,8 @@ async function generarCalificacionDespacho(calificacionPeriodo: CalificacionPeri
 		diasHabilesDespacho,
 		diasHabilesLaborados,
 		hayEscritos,
-		capacidadMaxima.cantidad
+		capacidadMaxima.cantidad,
+		despacho.tipoDespacho.especialidad
 	);
 
 	const registrosOral = registros.filter((registro) => registro.clase === 'oral');
