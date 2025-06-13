@@ -117,7 +117,7 @@ const generadorResultadosSubfactor =
 		let cargaBaseCalificacionFuncionario = getCargaBaseCalificacion(dataFuncionario);
 
 		if ((subfactor === 'oral' || subfactor === 'escrito')) {
-			if (especialidad !== 'EjecucionPenas') {
+			if (especialidad === 'EjecucionPenas') {
 				totalInventarioInicial += getInventarioInicial(dataTutelas);
 				egresoFuncionario += getEgresoFuncionario(dataTutelas, funcionarioId);
 				egresoOtrosFuncionarios += getEgresoOtrosFuncionarios(dataFuncTutelas, funcionarioId);
