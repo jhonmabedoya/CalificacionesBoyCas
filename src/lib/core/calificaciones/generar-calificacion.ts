@@ -221,7 +221,7 @@ export function getDiasFestivosPorTipoDespacho(tipoDespacho: TipoDespacho | null
 
 	return unirFechasNoHabiles(festivosPorMes, diaJusticia, semanaSantaCompleta, vacanciaJudicial);
 }
-
+/*
 function calcularPonderada(calificaciones: { diasLaborables: number; calificacionTotalFactorEficiencia: number }[] = []) {
 	if (calificaciones.length === 0) return 0;
 	if (calificaciones.length === 1) return calificaciones[0].calificacionTotalFactorEficiencia;
@@ -232,6 +232,34 @@ function calcularPonderada(calificaciones: { diasLaborables: number; calificacio
 			return (calificacionTotalFactorEficiencia / totalDiasLaborados) * diasLaborables;
 		})
 		.sum();
+}
+*/
+function calcularPonderada(calificaciones: { diasLaborables: number; calificacionTotalFactorEficiencia: number }[] = []) {
+	if (calificaciones.length === 0) {
+		console.log('❌ No hay calificaciones disponibles.');
+		return 0;
+	}
+	if (calificaciones.length === 1) {
+		console.log(`✅ Solo una calificación disponible. Resultado directo: ${calificaciones[0].calificacionTotalFactorEficiencia}`);
+		return calificaciones[0].calificacionTotalFactorEficiencia;
+	}
+
+	const totalDiasLaborados = _.sumBy(calificaciones, 'diasLaborables');
+	console.log(`🔢 Total de días laborados: ${totalDiasLaborados}`);
+
+	calificaciones.forEach(({ diasLaborables, calificacionTotalFactorEficiencia }, index) => {
+		const peso = diasLaborables / totalDiasLaborados;
+		console.log(`📌 [${index + 1}] Días: ${diasLaborables}, Calificación: ${calificacionTotalFactorEficiencia}, Peso: ${(peso * 100).toFixed(2)}%`);
+	});
+
+	const resultado = _(calificaciones)
+		.map(({ diasLaborables, calificacionTotalFactorEficiencia }) => {
+			return (calificacionTotalFactorEficiencia / totalDiasLaborados) * diasLaborables;
+		})
+		.sum();
+
+	console.log(`✅ Calificación ponderada final: ${resultado.toFixed(2)}`);
+	return resultado;
 }
 
 async function actualizarDiasLaborables(calificacionId: string) {
