@@ -228,7 +228,7 @@ function calcularPonderada(calificaciones: { diasLaborados: number; calificacion
 
 	const totalDiasLaborados = _.sumBy(calificaciones, 'diasLaborados');
 	return _(calificaciones)
-		.map(({ diasLaborables, calificacionTotalFactorEficiencia }) => {
+		.map(({ diasLaborados, calificacionTotalFactorEficiencia }) => {
 			return (calificacionTotalFactorEficiencia / totalDiasLaborados) * diasLaborados;
 		})
 		.sum();
